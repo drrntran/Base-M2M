@@ -1,3 +1,4 @@
+
 // This code test the functionality of the Egg circuitry.
 // The components connected to the circuit are:
 // - LED 1 (Pin 3)
@@ -127,10 +128,12 @@ void setup() {
   player.begin();  //will initialize the hardware and set default mode to be normal.
   player.keyDisable();
   player.setPlayMode(PM_REPEAT_ONE); //set mode to repeat playing a song
+  //player.setVolume(0xfe);
   
   player1.begin();  //will initialize the hardware and set default mode to be normal.
   player1.keyDisable();
   player1.setPlayMode(PM_REPEAT_ONE);
+  //player1.setVolume(0xfe);
 
   //attachInterrupt(digitalPinToInterrupt(TapIntrptPin), Tap_ISR, HIGH); //initialized Tap Interrupt ISR
   //attachInterrupt(digitalPinToInterrupt(SqueezeIntrptPin), Squeeze_ISR, HIGH); //initialized Squeeze Interrupt ISR
@@ -163,7 +166,10 @@ void loop(){ //havent implemented interrupt for squeeze
   Serial.print("\n");*/
   //Serial.print(SqueezeReading);
   //Serial.print("\n");
-
+  Serial.print(TapReading);
+  Serial.print(",");
+  Serial.println(SqueezeReading);
+  
   currentMillis = millis();   //get time for this loop
 
   //---------------------------CHANGES------------------------
@@ -185,6 +191,16 @@ void loop(){ //havent implemented interrupt for squeeze
     Tap(false);//function for output with only squeeze make noise
     Squeeze(true);
   }
+
+/*  if (old_TapState != TapState && TapState <= 3 && TapState != 0) {
+    Tap(true);//function for output with only tap make noise
+    Squeeze(false);
+  }
+  else {
+    Tap(false);//function for output with only squeeze make noise
+    Squeeze(true);
+  }
+*/  
   old_TapState = TapState;
   old_SqueezeState = SqueezeState;
   //---------------------CHANGES-----------------------
