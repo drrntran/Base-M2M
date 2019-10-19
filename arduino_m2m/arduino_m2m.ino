@@ -28,6 +28,7 @@
  *  SENSOR - A0
 */
 
+
 /* SPIN PINS
  *  MOTOR - N/A
  *  LED - 8
@@ -97,6 +98,10 @@ float sqPURPLE = 900;
 
 volatile int interruptedflag =0;
 
+char* button1 = "button-1.wav";
+char* button2 = "button-2.wav";
+char* button3 = "button-3.wav";
+
 //Initialize LED Strip
 #define N_LEDS 30 // 5 meter reel @ 30 LEDs/m
 #define SIZE 10
@@ -127,13 +132,22 @@ void setup() {
 
   player.begin();  //will initialize the hardware and set default mode to be normal.
   player.keyDisable();
-  player.setPlayMode(PM_REPEAT_ONE); //set mode to repeat playing a song
+  //player.setPlayMode(PM_REPEAT_ONE); //set mode to repeat playing a song
   //player.setVolume(0xfe);
+
+  player.addToPlaylist("Piano_B.wav");
+  player.addToPlaylist("Piano_C.wav");
+  player.addToPlaylist("Piano_D.wav");
+  
   
   player1.begin();  //will initialize the hardware and set default mode to be normal.
   player1.keyDisable();
-  player1.setPlayMode(PM_REPEAT_ONE);
+ // player1.setPlayMode(PM_REPEAT_ONE);
   //player1.setVolume(0xfe);
+
+  player1.addToPlaylist(button1);
+  player1.addToPlaylist(button2);
+  player1.addToPlaylist(button3);
 
   //attachInterrupt(digitalPinToInterrupt(TapIntrptPin), Tap_ISR, HIGH); //initialized Tap Interrupt ISR
   //attachInterrupt(digitalPinToInterrupt(SqueezeIntrptPin), Squeeze_ISR, HIGH); //initialized Squeeze Interrupt ISR
@@ -232,19 +246,19 @@ void TapSound(int mode) {
   switch(mode) {
     case 0:
       Serial.print("Tap Case 0 Start \n");
-      player1.playOne("button-1.wav");
+      player1.playOne(button1);
       player1.play();
       Serial.print("Tap Case 0 End \n");
       break;
     case 1:
       Serial.print("Tap Case 1 Start \n");
-      player1.playOne("button-2.wav");
+      player1.playOne(button2);
       player1.play();
       Serial.print("Tap Case 1 End \n");
       break;
     case 2:
       Serial.print("Tap Case 2 Start \n");
-      player1.playOne("button-3.wav");
+      player1.playOne(button3);
       player1.play();
       Serial.print("Tap Case 2 End \n");
       break;
